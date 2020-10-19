@@ -1,31 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Curso Basico de Vue.js | Platzi</title>
-  <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Curso Basico de Vue.js</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app" v-bind:style="{background: '#' + color}">
+      <img
+        v-on:mouseover="toggleShowPrices"
+        v-on:mouseout="toggleShowPrices"
+        v-bind:src="img"
+        v-bind:alt="name"
+      />
 
-  
-  <div id="app">
-    <img v-bind:src="img" v-bind:alt="name">
-      <h1>
-        {{ name }}
+      <h1 v-bind:class="changePercent > 0 ? 'green' : 'red'">
+        {{ title }}
         <span v-if="changePercent > 0">👍</span>
         <span v-else-if="changePercent < 0">😒</span>
         <span v-else>🤞</span>
-
-        <span v-show="changePercent > 0">👍</span>
-        <span v-show="changePercent < 0">😒</span>
-        <span v-show="changePercent === 0">🤞</span>
-
+        <span v-on:click="toggleShowPrices">
+          {{ showPrices ? '🙈' : '🙊' }}
+        </span>
       </h1>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="app.js"></script>
-</body>
+      <input type="number" v-model="value">
+      <span>{{ convertedValue }}</span>
+
+      <ul v-show="showPrices">
+        <li
+          class="uppercase"
+          v-bind:class="{ orange: p.value === price, red: p.value < price, green: p.value > price }"
+          v-for="(p, index) in pricesWithDays"
+          v-bind:key="price.day"
+        >
+          {{index}} - {{p.day}} - {{p.value}}
+        </li>
+      </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="app.js"></script>
+  </body>
 </html>
